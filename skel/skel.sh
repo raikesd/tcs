@@ -11,10 +11,40 @@
 #	Date		Author		Description
 #################################################################################
 
-while getopt ":dh" opt; "$@"; do
-case $opt in
-	d) echo "option d was triggered" ;;
-	h) echo "option h was triggered" ;;
-	\?) echo "an invalid option was passed " ;;
-esac
+#------------------------------------------------------------------------------
+#	Function: Usage
+#
+#	print the script usage.
+#------------------------------------------------------------------------------
+Usage()
+{
+	echo " usage: $0 "
+	exit 0
+}
+
+#------------------------------------------------------------------------------
+#	function: ParseParameter
+#	
+#	Parse teh command-line options.
+#------------------------------------------------------------------------------
+ParseParameters() 
+{
+while getopts ":dh" opt; do
+	case $opt in
+		d)
+			set -x
+			;;
+		h)
+			Usage
+			;;
+		\?)
+			echo "Invalid argument: (-$OPTARG)"
+			exit 1
+			;;
+	esac
 done
+}
+
+#---- Main Routine ----#
+ParseParameters $@
+exit 0
